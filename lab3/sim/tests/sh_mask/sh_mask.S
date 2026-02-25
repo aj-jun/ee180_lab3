@@ -17,7 +17,7 @@ boot:
     lui     $s0, 0x8002         # status/test register base
     ori     $s1, $0, 1          # done = 1
 
-    ori     $t0, $0, 0x3220     # scratch address
+    ori     $t0, $0, 0x3220     
 
     # Seed memory word: 0x11223344
     lui     $t1, 0x1122

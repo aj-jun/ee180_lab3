@@ -20,7 +20,7 @@ boot:
 
     lui     $t1, 0x0321         
     ori     $t0, $0, 1
-    sb		$t0, 0($t1)	# TODO: WAW dependency stall?
+    sb		$t0, 0($t1)
     ori     $t0, $0, 2
     sb		$t0, 1($t1)	
     ori     $t0, $0, 3
