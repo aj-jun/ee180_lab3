@@ -1,0 +1,6 @@
+the_ROM_image:
+{
+	[bootloader]zed_fsbl.elf
+	/home/users/ajjun/ee180_lab3/lab3/hw/zed/SDK/SDK_Export/hw_spec/system.bit
+	u-boot.elf
+}
