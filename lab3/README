@@ -61,4 +61,4 @@ We talked to CA Josh at OH and found that our Zedboard broke while we were going
 
 ### AI Tool Usage
 We used an LLM to help explain how each of the files in the starter code interacted with one another because I was really confused on how they are connected. 
-We heavily used the LLM for debugging the pcore issue which was preventing us from generating the bitstream at first. We also used the LLM to debug finding out that our Zedboard broke because there was another action being run on the Zepboard at the same time.
+We heavily used the LLM for debugging the pcore issue which was preventing us from generating the bitstream at first. Based on OH with Josh, we just moved the pcore files/made a copy of it in another folder. Since this was not a change in our files for the content of this lab, Josh said that these changes were okay. We also used the LLM to debug finding out that our Zedboard broke because there was another action being run on the Zepboard at the same time.
