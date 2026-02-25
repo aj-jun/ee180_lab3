@@ -14,8 +14,8 @@
     .global boot
     .ent    boot
 boot:
-    lui     $s0, 0x8002         # status/test register base
-    ori     $s1, $0, 1          # done = 1
+    lui     $s0, 0x8002         # Prep the address of the status and test registers
+    ori     $s1, $0, 1          # Initalize 'done" = 1
 
     ori     $t0, $0, 0x3210
     lui     $t1, 0x0000
@@ -23,7 +23,7 @@ boot:
     sw      $t1, 0($t0)
 
     ori     $t2, $0, 0x0f0f     # stale value that should NOT be used
-    lw      $t2, 0($t0)         # t2 should become 0x000000f0
+    lw      $t2, 0($t0)         # t2 expected to become 0x000000f0
     xori    $t3, $t2, 0x00ff    # expected 0x0000000f
 
     ori     $t4, $0, 0x000f
