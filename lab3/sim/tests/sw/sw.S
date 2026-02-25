@@ -17,8 +17,8 @@
     .global boot
     .ent    boot
 boot:
-    lui     $s0, 0x8002         # Load the base address of the status/test registers
-    ori     $s1, $0, 1          # Prepare the 'done' status
+    lui     $s0, 0x8002         # Load in address of the status and test registers
+    ori     $s1, $0, 1          # Initialize 'done' (status)
     sw      $s1, 4($s0)         # Set the test result
     sw      $s1, 0($s0)         # Set 'done'
 
