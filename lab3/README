@@ -95,6 +95,11 @@ The main changes were done in `hw/hdl/verilog/mips/decode.v`, `mips_cpu.v`, `ins
   - `sh_mask`: verifies halfword store mask behavior (upper/lower half)
   - `lh_offsets_signext`: verifies `lh` offset selection and sign extension
 
+### Additional Notes
+We talked to CA Josh at OH and found that our Zedboard broke while we were going through the "Running Your Processor" steps. When doing a first pass of the errors, the Zepdboard was saying that something else was running which was preventing use from running the example user cases. Upon trying to login to the Zedboard again, we couldn't log in and Josh confirmed that our board broke. This prevented us from stepping through the logic synthesis, programming the fpga, and the running your processor steps again. We were able to generate the bitstream and the fpga.img from earlier runs. This note is to explain why we were exempt from running it end to end on the fpga. 
+
 ### AI Tool Usage
-I used an LLM to help explain how each of the files in the starter code interacted with one another because I was really confused on how they are connected. 
+We used an LLM to help explain how each of the files in the starter code interacted with one another because I was really confused on how they are connected. 
+We heavily used the LLM for debugging the pcore issue which was preventing us from generating the bitstream at first. We also used the LLM to debug finding out that our Zedboard broke because there was another action being run on the Zepboard at the same time. 
+
 
