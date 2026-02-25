@@ -19,7 +19,7 @@
 boot:
     lui     $s0, 0x8002         # Load the base address of the status/test registers
     ori     $s1, $0, 1          # Prepare the 'done' status
-    ori     $t0, $0, 0xffff     # Load a positive/zero number
+    ori     $t0, $0, 0xffff     # Load a positive/zero number (Why is ORI sign extending?)
     bgez    $t0, $target
     ori     $v0, $0, 0          # The test result starts as a failure
 
@@ -33,6 +33,6 @@ $done:
 
 $target:
     j       $finish
-    ori     $v0, $0, 1          # Set the result to pass
+    ori     $v0, $0, 1          # Set the result to pass (WHY NEED TO FLIP?)
 
     .end boot

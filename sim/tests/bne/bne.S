@@ -22,7 +22,6 @@ boot:
     ori     $t0, $0, 1
     ori     $v0, $0, 0          # The test result starts as a failure
     bne     $t0, $0, $target_ne
-    nop
 
 $finish:
     sw      $v0, 4($s0)
@@ -34,6 +33,6 @@ $done:
 
 $target_ne:
     j       $finish
-    ori     $v0, $0, 1          # Set the result to pass
+    ori     $v0, $0, 1          # Set the result to pass (WHY NEED TO FLIP?)
 
     .end boot

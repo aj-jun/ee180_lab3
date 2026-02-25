@@ -30,10 +30,9 @@ $finish:
 
 $done:
     j       $done
-    nop
 
 $target:
     j       $finish
-    ori     $v0, $0, 1          # Set the result to pass
+    ori     $v0, $0, 1          # Set the result to pass (WHY NEED TO FLIP?)
 
     .end boot
