@@ -37,7 +37,7 @@ boot:
     subu    $t7, $t3, $t6
     sltiu   $t7, $t7, 1
 
-    and     $v0, $t5, $t7       # pass iff both checks pass
+    and     $v0, $t5, $t7       # pass if and only if both checks pass
     sw      $v0, 4($s0)
     sw      $s1, 0($s0)
 

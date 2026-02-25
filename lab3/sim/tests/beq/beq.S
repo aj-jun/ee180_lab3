@@ -21,10 +21,10 @@ boot:
     ori     $s1, $0, 1          # Prepare the 'done' status
     ori     $t0, $0, 0xffff
     ori     $t1, $0, 0xffff
-    # nop                         # TODO: remove (RAW)
-    # nop                         # TODO: remove (RAW)
+    # nop                         # remove (RAW)
+    # nop                         # remove (RAW)
     beq     $t0, $t1, $target
-    # nop                         # TODO: remove (branch uncertainty)
+    # nop                         # remove (due to branch)
     # nop
     # nop 
     ori     $v0, $0, 0          # The test result starts as a failure
@@ -40,6 +40,6 @@ $done:
 
 $target:
     j       $finish
-    ori     $v0, $0, 1          # Set the result to pass (WHY NEED TO FLIP?)
+    ori     $v0, $0, 1          # Set the result to pass
 
     .end boot

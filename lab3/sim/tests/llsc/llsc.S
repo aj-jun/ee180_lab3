@@ -17,21 +17,21 @@
     .global boot
     .ent    boot
 boot:
-    lui     $s0, 0x8002         # 0 Load the base address of the status/test registers
+    lui     $s0, 0x8002         # 0 Load base address of the status/test registers
     ori     $s1, $0, 1          # 1 Prepare the 'done' status
     ori     $t7, $0, 1         
 
-    lui     $t0, 0              # 2 Load some valid address 0x00003210 to register $t0
+    lui     $t0, 0              # 2 Load valid address 0x00003210 to register $t0
     ori     $t0, $t0, 0x3210    # 3
     ori     $t2, $0,  0x2       # 4
     sw      $t0, 0($t0)         # 5
-    ll      $t1, 0($t0)         # 7 Should load link0 from 0x00003210
-    sc      $t2, 0($t0)         # 8 sc should ouput 1        
+    ll      $t1, 0($t0)         # 7 Load link0 from 0x00003210
+    sc      $t2, 0($t0)         # 8 sc == ouput 1        
     bne     $t2, $t7, $fail     # 9
     nop
     
-    ll      $t4, 0($t0)         # 5 Should load link 0 from 0x00003210
-    sw      $0,  0($t0)         # 7 Will invalidate sc
+    ll      $t4, 0($t0)         # 5 Load link 0 from 0x00003210
+    sw      $0,  0($t0)         # 7 Invalidates sc
     sc      $t4, 0($t0)         # 8
     bne     $t4, $0, $fail      # 9
     nop
