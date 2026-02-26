@@ -52,9 +52,50 @@ Write a README file that contains the following:
 - xor
 - xori
 
+### Description of changes made to the control and datapath to handle hazards and forwarding 
+The main changes were done in `hw/hdl/verilog/mips/decode.v`, `mips_cpu.v`, `instruction_fetch.v`, and `alu.v`.
 
+#### Forwarding
+- Implemented ID-stage forwarding for both source operands (`rs` and `rt`) from:
+  - EX stage result
+  - MEM stage writeback value
+- Added explicit forwarding priority so EX forwarding takes precedence over MEM forwarding when both match.
+- This resolves double data hazards by ensuring the most recent ALU result is always selected.
 
+#### Stall Logic
+- Added load-use hazard detection using `mem_read_ex` and register dependency checks for both `rs` and `rt`.
+- Added a store-conditional wait condition so decode stalls when required by LL/SC state.
+- Stall behavior uses provided pipeline control (`en_if`, `rst_id`) so stale values are not consumed.
+- When a stall is asserted, instruction fetch is frozen and the decode stage is cleared to prevent incorrect operand propagation.
 
+#### Branch/Jump Behavior
+- Resolved branch and jump control in ID stage and wired fetch next-PC selection accordingly.
+- Added PC selection priority chain for:
+  - jump register (`jr`/`jalr`)
+  - jump target (`j`/`jal`)
+  - branch target
+  - sequential PC+4
+- This priority chain ensures correct control-flow redirection while avoiding control hazards.
+
+#### Memory and Subword Operations
+- Added/updated support for byte/halfword/word memory behavior:
+  - `lb`, `lbu`, `lh`, `sb`, `sh`, `sw`
+- Implemented byte and halfword data selection/extension and per-byte write-enable behavior.
+- This includes proper sign extension for `lb` and `lh`, zero extension for `lbu`, and correct upper/lower half masking for `sh`.
+
+#### LL/SC Semantics
+- Implemented LL/SC tracking state through decode/execute/memory pipeline.
+- `sc` stores only when linked state is valid.
+- `sc` writes success/failure result (1/0) to `rt` as required.
+- The linked state is cleared appropriately after store operations to preserve correct atomic semantics.
+
+### Testing
+- Added and updated baseline instruction/unit tests in `sim/tests`.
+- Added additional targeted tests to better validate new hazard and memory behavior:
+  - `fwd_priority`: verifies EX-vs-MEM forwarding priority
+  - `stall_load_xori`: verifies load-use stall with immediate ALU consumer
+  - `sh_mask`: verifies halfword store mask behavior (upper/lower half)
+  - `lh_offsets_signext`: verifies `lh` offset selection and sign extension
 
 ### Additional Notes
 We talked to CA Josh at OH and found that our Zedboard broke while we were going through the "Running Your Processor" steps. When doing a first pass of the errors, the Zepdboard was saying that something else was running which was preventing use from running the example user cases. Upon trying to login to the Zedboard again, we couldn't log in and Josh confirmed that our board broke. This prevented us from stepping through the logic synthesis, programming the fpga, and the running your processor steps again. We were able to generate the bitstream and the fpga.img from earlier runs. This note is to explain why we were exempt from running it end to end on the fpga. 
